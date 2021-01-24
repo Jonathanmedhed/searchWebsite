@@ -9,6 +9,8 @@ const index = () => {
 	const [showResults, setShowResults] = useState(false)
 	const [selectedTags, setSelectedTags] = useState([])
 	const [selectedIndustries, setSelectedIndustries] = useState([])
+	const [from, setFrom] = useState(null)
+	const [to, setTo] = useState(null)
 
 	return (
 		<>
@@ -22,8 +24,12 @@ const index = () => {
 				selectedIndustries={selectedIndustries}
 				setSelectedIndustries={setSelectedIndustries}
 				setShowResults={setShowResults}
+				from={from}
+				setFrom={setFrom}
+				to={to}
+				setTo={setTo}
 			/>
-			{showResults ? <Results industries={selectedIndustries} tags={selectedTags} /> : <></>}
+			{showResults ? <Results industries={selectedIndustries} tags={selectedTags} from={from} to={to} /> : <></>}
 		</>
 	)
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import CalendarComponent from './CalendarComponent'
 
 const Filter = ({
 	setShowSearch,
@@ -8,7 +9,13 @@ const Filter = ({
 	selectedIndustries,
 	setSelectedIndustries,
 	setShowResults,
+	from,
+	setFrom,
+	to,
+	setTo,
 }) => {
+	const [keyword, setKeyword] = useState('')
+
 	const industries = [
 		{ label: 'Agriculture', value: 'agriculture' },
 		{ label: 'Building', value: 'building' },
@@ -45,8 +52,6 @@ const Filter = ({
 		{ label: 'aviation', value: 'aviation' },
 		{ label: 'banking', value: 'banking' },
 	]
-
-	const [keyword, setKeyword] = useState('')
 
 	const checkIfSelectedTag = (tag) => {
 		return selectedTags.find((x) => x.value === tag.value)
@@ -86,7 +91,35 @@ const Filter = ({
 	const clearHandler = () => {
 		setSelectedIndustries([])
 		setSelectedTags([])
+		setFrom(null)
+		setTo(null)
 	}
+
+	const dateRange = () => (
+		<section className="filter-item">
+			<h2 className="title">
+				{`${'last funding round'}`} <div className="title-line"></div>
+			</h2>
+			<div className="calendars">
+				<CalendarComponent
+					placeholder={'Start date'}
+					disabled={to && to}
+					name={'from'}
+					value={from}
+					onChange={setFrom}
+				/>{' '}
+				<span>to</span>{' '}
+				<CalendarComponent
+					placeholder={'End date'}
+					disabled={from && from}
+					minDate={from && from}
+					name={'to'}
+					value={to}
+					onChange={setTo}
+				/>
+			</div>
+		</section>
+	)
 	const searchBox = () => (
 		<div className="filter-item">
 			<h2 className="title">
@@ -127,7 +160,7 @@ const Filter = ({
 	)
 
 	const checkBoxes = () => (
-		<div className="filter-item">
+		<section className="filter-item">
 			<h2 className="title">
 				industries <div className="title-line"></div>
 			</h2>
@@ -146,10 +179,11 @@ const Filter = ({
 					</li>
 				))}
 			</ul>
-		</div>
+		</section>
 	)
 	return (
 		<section className="filter">
+			{dateRange()}
 			{searchBox()} {checkBoxes()}
 			<div className="buttons">
 				<button onClick={() => applyHandler()} className="btn btn-primary">
