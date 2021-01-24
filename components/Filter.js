@@ -14,6 +14,7 @@ const Filter = ({
 	to,
 	setTo,
 }) => {
+	// Search value
 	const [keyword, setKeyword] = useState('')
 
 	const industries = [
@@ -53,10 +54,13 @@ const Filter = ({
 		{ label: 'banking', value: 'banking' },
 	]
 
+	// check if tag is already selected
 	const checkIfSelectedTag = (tag) => {
 		return selectedTags.find((x) => x.value === tag.value)
 	}
 
+	// check if industry is already selected
+	// use boolean for checkbox checked state
 	const checkIfSelectedIndustry = (industry) => {
 		if (selectedIndustries.find((x) => x.value === industry.value)) {
 			return true
@@ -65,29 +69,42 @@ const Filter = ({
 		}
 	}
 
+	// add tag to selected ones
 	const addToTags = (tag) => {
 		if (!checkIfSelectedTag(tag)) {
 			setSelectedTags([...selectedTags, tag])
+			localStorage.setItem('tags', JSON.stringify([...selectedTags, tag]))
 		}
 	}
 
+	// add industry to selected ones
+	// remove if already selected
 	const addToIndustries = (industry) => {
 		if (checkIfSelectedIndustry(industry) === false) {
 			setSelectedIndustries([...selectedIndustries, industry])
+			localStorage.setItem('industries', JSON.stringify([...selectedIndustries, industry]))
 		} else {
 			setSelectedIndustries(selectedIndustries.filter((x) => x.value !== industry.value))
+			localStorage.setItem(
+				'industries',
+				JSON.stringify(selectedIndustries.filter((x) => x.value !== industry.value))
+			)
 		}
 	}
 
+	// remove tag to selected ones
 	const removeFromTags = (tag) => {
 		setSelectedTags(selectedTags.filter((x) => x.value !== tag.value))
+		localStorage.setItem('tags', JSON.stringify(selectedTags.filter((x) => x.value !== tag.value)))
 	}
 
+	// show search results
 	const applyHandler = () => {
 		setShowSearch(false)
 		setShowResults(true)
 	}
 
+	// clear all input values
 	const clearHandler = () => {
 		setSelectedIndustries([])
 		setSelectedTags([])
@@ -95,6 +112,7 @@ const Filter = ({
 		setTo(null)
 	}
 
+	// date range input component
 	const dateRange = () => (
 		<section className="filter-item">
 			<h2 className="title">
@@ -108,7 +126,7 @@ const Filter = ({
 					value={from}
 					onChange={setFrom}
 				/>{' '}
-				<span>to</span>{' '}
+				<span className="separator">to</span>{' '}
 				<CalendarComponent
 					placeholder={'End date'}
 					disabled={from && from}
@@ -120,6 +138,8 @@ const Filter = ({
 			</div>
 		</section>
 	)
+
+	// search input component
 	const searchBox = () => (
 		<div className="filter-item">
 			<h2 className="title">
@@ -159,6 +179,7 @@ const Filter = ({
 		</div>
 	)
 
+	// checkboxes component
 	const checkBoxes = () => (
 		<section className="filter-item">
 			<h2 className="title">
@@ -181,21 +202,26 @@ const Filter = ({
 			</ul>
 		</section>
 	)
+
+	const options = () => (
+		<div className="buttons">
+			<button onClick={() => applyHandler()} className="btn btn-primary">
+				apply
+			</button>
+			<button onClick={() => clearHandler()} className="btn btn-reverse">
+				clear all
+			</button>
+			<button onClick={() => setShowSearch(false)} className="btn btn-white">
+				cancel
+			</button>
+		</div>
+	)
+
 	return (
 		<section className="filter">
 			{dateRange()}
 			{searchBox()} {checkBoxes()}
-			<div className="buttons">
-				<button onClick={() => applyHandler()} className="btn btn-primary">
-					apply
-				</button>
-				<button onClick={() => clearHandler()} className="btn btn-reverse">
-					clear all
-				</button>
-				<button onClick={() => setShowSearch(false)} className="btn btn-white">
-					cancel
-				</button>
-			</div>
+			{options()}
 		</section>
 	)
 }

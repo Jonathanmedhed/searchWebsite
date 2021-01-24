@@ -5,6 +5,7 @@ const CalendarComponent = ({ placeholder, disabled, minDate, name, value, onChan
 	let today = new Date()
 	let newMinDate = new Date()
 
+	// Create new minimun date for 'to' date
 	if (minDate) {
 		newMinDate.setDate(minDate.getDate() + 1)
 	}

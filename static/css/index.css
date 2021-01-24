@@ -2919,6 +2919,7 @@ Images
   padding: 0;
 }
 
+html,
 body {
   font-family: "Raleway", sans-serif;
   font-size: 1rem;
@@ -2927,14 +2928,22 @@ body {
   color: #333;
   scrollbar-width: thin;
   scrollbar-color: #28a745 whitesmoke;
+  height: 100%;
 }
+html #__next,
+body #__next {
+  min-height: 100%;
+}
+html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   width: 0.5rem;
 }
+html::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track {
   background: #dfdfdf;
   border-radius: 0.2rem;
 }
+html::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb {
   background-color: #28a745;
   border-radius: 6px;
@@ -2988,6 +2997,7 @@ textarea {
   border-bottom-left-radius: 0;
 }
 
+/** header */
 .p-datepicker.p-component .p-datepicker-header {
   background-color: #28a745;
   display: flex;
@@ -2995,6 +3005,15 @@ textarea {
   align-items: center;
   justify-content: center;
   padding: 0;
+}
+.p-datepicker.p-component .p-datepicker-header button {
+  font-size: 0.8rem;
+}
+.p-datepicker.p-component .p-datepicker-header button:first-child {
+  padding-left: 0.2rem;
+}
+.p-datepicker.p-component .p-datepicker-header button:last-child {
+  padding-right: 0.2rem;
 }
 
 .p-datepicker.p-component .p-datepicker-header button {
@@ -3278,6 +3297,16 @@ select.p-datepicker-year .select-selected:after {
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
+.filter .filter-item .calendars,
+.filter-closed .filter-item .calendars {
+  display: flex;
+  flex-direction: row;
+}
+.filter .filter-item .calendars .separator,
+.filter-closed .filter-item .calendars .separator {
+  font-weight: bold;
+  padding: 0 0.5rem;
+}
 .filter .filter-item .selected-tags,
 .filter-closed .filter-item .selected-tags {
   display: flex;
@@ -3368,11 +3397,45 @@ select.p-datepicker-year .select-selected:after {
 }
 
 .search-container-closed {
-  min-height: 1rem;
-  max-height: 1rem;
+  min-height: 1px;
+  max-height: 1px;
   opacity: 0;
   overflow: hidden;
   transition: all 0.5s ease-in;
+}
+
+/************************************  Footer  ***************************************************/
+footer {
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  opacity: 0.9;
+  padding: 1rem 0;
+  background-color: #28a745;
+  color: white;
+  text-align: center;
+}
+footer .logo-section {
+  margin-top: 1rem;
+}
+footer .logo-section img {
+  max-width: 2.5rem;
+  max-height: 2.5rem;
+  object-fit: cover;
+}
+footer .logo-section span {
+  font-weight: bold;
+}
+footer .bottom {
+  margin-top: 0.5rem;
+}
+footer .bottom a {
+  color: white;
+  font-weight: bold;
+}
+footer .bottom a:hover {
+  color: #dfdfdf;
+  text-decoration: underline;
 }
 
 /************************************  Header  ***************************************************/
@@ -3421,8 +3484,8 @@ select.p-datepicker-year .select-selected:after {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 .jumbo .content {
   display: flex;
