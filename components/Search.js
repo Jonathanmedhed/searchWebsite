@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Filter from './Filter'
+import { options } from '../constants/constants'
 
 const Search = ({
 	showSearch,
@@ -14,9 +15,9 @@ const Search = ({
 	to,
 	setTo,
 }) => {
+	// selected option
 	const [selectedOption, setSelectedOption] = useState('sector')
 
-	const options = ['overview', 'sector', 'climate impact', 'financials', 'wildcard']
 	const header = () => (
 		<ul className="tabs">
 			{options.map((option) => (
@@ -30,8 +31,23 @@ const Search = ({
 			))}
 		</ul>
 	)
+
+	const headerMobile = () => (
+		<ul className="tabs-mobile">
+			{options.map((option) => (
+				<li
+					key={option}
+					onClick={() => setSelectedOption(option)}
+					className={selectedOption === option ? 'tab-highlight' : 'tab'}
+				>
+					{option}
+				</li>
+			))}
+		</ul>
+	)
 	return (
 		<section className={showSearch ? 'search-container' : 'search-container-closed'}>
+			{headerMobile()}
 			{header()}{' '}
 			{selectedOption === 'sector' ? (
 				<Filter

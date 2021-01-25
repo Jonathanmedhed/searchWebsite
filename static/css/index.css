@@ -3219,6 +3219,13 @@ select.p-datepicker-year .select-selected:after {
   flex-wrap: wrap;
   max-height: 10rem;
 }
+@media (max-width: 22.5rem) {
+  .filter .filter-item .check-boxes,
+.filter-closed .filter-item .check-boxes {
+    max-height: 15rem;
+    max-width: 20rem;
+  }
+}
 .filter .filter-item .check-boxes .checkbox-item,
 .filter-closed .filter-item .check-boxes .checkbox-item {
   display: flex;
@@ -3232,6 +3239,12 @@ select.p-datepicker-year .select-selected:after {
   margin-top: 0.2rem;
   z-index: 1;
   font-size: 0.8rem;
+}
+@media (max-width: 22.5rem) {
+  .filter .filter-item .check-boxes .checkbox-item .checkbox-label,
+.filter-closed .filter-item .check-boxes .checkbox-item .checkbox-label {
+    max-width: 10rem;
+  }
 }
 .filter .filter-item .check-boxes .checkbox-item .checkbox-container,
 .filter-closed .filter-item .check-boxes .checkbox-item .checkbox-container {
@@ -3356,6 +3369,10 @@ select.p-datepicker-year .select-selected:after {
 }
 .filter .buttons,
 .filter-closed .buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   align-self: flex-end;
 }
 .filter .buttons .btn,
@@ -3363,6 +3380,7 @@ select.p-datepicker-year .select-selected:after {
   min-width: 7.5rem;
   max-width: 7.5rem;
   margin-right: 0.5rem;
+  margin-top: 0.5rem;
   text-transform: uppercase;
   font-size: 0.8rem;
 }
@@ -3491,6 +3509,7 @@ footer .bottom a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 1rem;
 }
 .jumbo .content h1 {
   margin-top: 1rem;
@@ -3513,6 +3532,7 @@ footer .bottom a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0 1rem;
 }
 .results .title-underline {
   width: 100%;
@@ -3583,7 +3603,8 @@ footer .bottom a:hover {
 }
 
 /************************************  Tabs  ***************************************************/
-.tabs {
+.tabs,
+.tabs-mobile {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -3591,7 +3612,9 @@ footer .bottom a:hover {
   align-items: center;
 }
 .tabs .tab,
-.tabs .tab-highlight {
+.tabs .tab-highlight,
+.tabs-mobile .tab,
+.tabs-mobile .tab-highlight {
   width: 100%;
   color: white;
   border-right: solid 1px #23923d;
@@ -3602,17 +3625,50 @@ footer .bottom a:hover {
   text-transform: uppercase;
 }
 .tabs .tab:last-child,
-.tabs .tab-highlight:last-child {
+.tabs .tab-highlight:last-child,
+.tabs-mobile .tab:last-child,
+.tabs-mobile .tab-highlight:last-child {
   border-right: none;
 }
-.tabs .tab {
+.tabs .tab,
+.tabs-mobile .tab {
   background-color: #28a745;
 }
-.tabs .tab:hover {
+.tabs .tab:hover,
+.tabs-mobile .tab:hover {
   cursor: pointer;
 }
-.tabs .tab-highlight {
+.tabs .tab-highlight,
+.tabs-mobile .tab-highlight {
   background-color: #23923d;
+}
+
+@media (max-width: 22.5rem) {
+  .tabs .tab {
+    display: none;
+  }
+}
+
+.tabs-mobile {
+  display: none;
+}
+@media (max-width: 22.5rem) {
+  .tabs-mobile {
+    display: flex;
+  }
+}
+.tabs-mobile .tab {
+  min-height: 4rem;
+  max-height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 22.5rem) {
+  .tabs-mobile .tab-highlight {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

@@ -2,9 +2,12 @@ import React from 'react'
 import moment from 'moment'
 
 const Results = ({ industries, tags, from, to }) => {
+	// check if there are selected industries
 	const hasIndustries = industries && industries.length > 0
+	// check if there are selected tags
 	const hasTags = tags && tags.length > 0
-	const hasDates = from && to
+	// check if there are selected dates
+	const hasDates = from || to
 
 	const industryParams = () => (
 		<>

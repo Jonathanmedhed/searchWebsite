@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import CalendarComponent from './CalendarComponent'
+import { tags, industries } from '../constants/constants'
 
 const Filter = ({
 	setShowSearch,
@@ -17,43 +18,6 @@ const Filter = ({
 	// Search value
 	const [keyword, setKeyword] = useState('')
 
-	const industries = [
-		{ label: 'Agriculture', value: 'agriculture' },
-		{ label: 'Building', value: 'building' },
-		{ label: 'Constructions', value: 'constructions' },
-		{ label: 'Energy', value: 'energy' },
-		{ label: 'Financial services', value: 'financial services' },
-		{ label: 'Food & beverage', value: 'food & beverage' },
-		{ label: 'Forestry', value: 'forestry' },
-		{ label: 'Healthcare', value: 'healthcare' },
-		{ label: 'Logistics', value: 'logistics' },
-		{ label: 'Manufacturing', value: 'manufacturing' },
-		{ label: 'Mining', value: 'mining' },
-		{ label: 'Public administration', value: 'public administration' },
-		{ label: 'Transportation', value: 'transportation' },
-		{ label: 'Utilities (electricity, water, waste)', value: 'utilities (electricity, water, waste)' },
-	]
-
-	const tags = [
-		{ label: '3d printing', value: '3d printing' },
-		{ label: 'advanced metering', value: 'advanced metering' },
-		{ label: 'air vehicles', value: 'air vehicles' },
-		{ label: 'air-to-water', value: 'air-to-water' },
-		{ label: 'algae', value: 'algae' },
-		{ label: 'packaging', value: 'packaging' },
-		{ label: 'alternative proteins', value: 'alternative proteins' },
-		{ label: 'animal farming', value: 'animal farming' },
-		{ label: 'animal welfareg', value: 'animal welfareg' },
-		{ label: 'apiculture', value: 'apiculture' },
-		{ label: 'apps', value: 'apps' },
-		{ label: 'aquaculture', value: 'aquaculture' },
-		{ label: 'artificial intelligence (AI)', value: 'artificial intelligence (AI)' },
-		{ label: 'automotive', value: 'automotive' },
-		{ label: 'autonomous vehicles', value: 'autonomous vehicles' },
-		{ label: 'aviation', value: 'aviation' },
-		{ label: 'banking', value: 'banking' },
-	]
-
 	// check if tag is already selected
 	const checkIfSelectedTag = (tag) => {
 		return selectedTags.find((x) => x.value === tag.value)
@@ -69,7 +33,7 @@ const Filter = ({
 		}
 	}
 
-	// add tag to selected ones
+	// add tag to selected ones in state and local storage
 	const addToTags = (tag) => {
 		if (!checkIfSelectedTag(tag)) {
 			setSelectedTags([...selectedTags, tag])
@@ -79,6 +43,7 @@ const Filter = ({
 
 	// add industry to selected ones
 	// remove if already selected
+	// state and local storage
 	const addToIndustries = (industry) => {
 		if (checkIfSelectedIndustry(industry) === false) {
 			setSelectedIndustries([...selectedIndustries, industry])
@@ -92,10 +57,22 @@ const Filter = ({
 		}
 	}
 
-	// remove tag to selected ones
+	// remove tag from selected ones in state and local storage
 	const removeFromTags = (tag) => {
 		setSelectedTags(selectedTags.filter((x) => x.value !== tag.value))
 		localStorage.setItem('tags', JSON.stringify(selectedTags.filter((x) => x.value !== tag.value)))
+	}
+
+	// set date 'to' state and local storage
+	const setDateTo = (date) => {
+		setTo(date)
+		localStorage.setItem('dateTo', JSON.stringify(date))
+	}
+
+	// set date 'from' state and local storage
+	const setDateFrom = (date) => {
+		setFrom(date)
+		localStorage.setItem('dateFrom', JSON.stringify(date))
 	}
 
 	// show search results
@@ -104,12 +81,13 @@ const Filter = ({
 		setShowResults(true)
 	}
 
-	// clear all input values
+	// clear all input states and local storage
 	const clearHandler = () => {
 		setSelectedIndustries([])
 		setSelectedTags([])
 		setFrom(null)
 		setTo(null)
+		typeof window !== 'undefined' && window.localStorage.clear()
 	}
 
 	// date range input component
@@ -124,7 +102,7 @@ const Filter = ({
 					disabled={to && to}
 					name={'from'}
 					value={from}
-					onChange={setFrom}
+					onChange={setDateFrom}
 				/>{' '}
 				<span className="separator">to</span>{' '}
 				<CalendarComponent
@@ -133,7 +111,7 @@ const Filter = ({
 					minDate={from && from}
 					name={'to'}
 					value={to}
-					onChange={setTo}
+					onChange={setDateTo}
 				/>
 			</div>
 		</section>
@@ -153,6 +131,7 @@ const Filter = ({
 				onChange={(e) => setKeyword(e.target.value)}
 				placeholder="Type to search..."
 			></input>
+			{/** Selected tags container */}
 			<section className="selected-tags">
 				{selectedTags.map((tag) => (
 					<span onClick={() => removeFromTags(tag)} key={tag.value} className="selected-tag">
@@ -161,6 +140,7 @@ const Filter = ({
 					</span>
 				))}
 			</section>
+			{/** Pop up suggested tag list */}
 			<section className="tag-list">
 				{tags
 					.filter((tag) => tag.value.toLowerCase().includes(keyword.toLowerCase()) && keyword !== '')
@@ -203,6 +183,7 @@ const Filter = ({
 		</section>
 	)
 
+	// bottom options
 	const options = () => (
 		<div className="buttons">
 			<button onClick={() => applyHandler()} className="btn btn-primary">
